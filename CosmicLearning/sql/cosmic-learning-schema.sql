@@ -12,23 +12,25 @@ create table app_user (
 app_user_id int primary key auto_increment,
 username varchar(50) not null,
 password_hash varchar(2048) not null,
-disabled TINYINT(1)
+enabled bit not null default(1)
 );
 
 create table app_role (
 app_role_id int primary key auto_increment,
-name varchar(50) not null
+name varchar(50) not null unique
 );
 
 create table app_user_role (
-app_user_id int not null,
-app_role_id int not null,
-constraint fk_app_user_role_app_user_id
-           foreign key (app_user_id)
-           references app_user(app_user_id),
-constraint fk_app_user_role_app_role_id
-           foreign key (app_role_id)
-           references app_role(app_role_id)
+    app_user_id int not null,
+    app_role_id int not null,
+    constraint pk_app_user_role
+        primary key (app_user_id, app_role_id),
+    constraint fk_app_user_role_user_id
+        foreign key (app_user_id)
+        references app_user(app_user_id),
+	constraint fk_app_user_role_role_id
+        foreign key (app_role_id)
+        references app_role(app_role_id)
 );
 
 create table user (
@@ -90,6 +92,8 @@ create table response (
 question_id int not null,
 user_id int not null,
 answer_option_id int not null,
+constraint pk_app_question_user_answer_option
+        primary key (question_id, user_id, answer_option_id),
 constraint fk_response_question_id
            foreign key (question_id)
            references question(question_id),
@@ -100,4 +104,5 @@ constraint fk_response_answer_option_id
            foreign key (answer_option_id)
            references answer_options(answer_option_id)
 );
+
 
