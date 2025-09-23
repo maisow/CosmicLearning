@@ -41,7 +41,6 @@ age int not null,
 title varchar(5),
 university varchar(150) not null,
 email varchar(150) not null,
-phone varchar(50),
 amount int not null,
 app_user_id int not null,
 constraint fk_user_app_user_id
@@ -51,7 +50,8 @@ constraint fk_user_app_user_id
 
 create table subject (
 subject_id int primary key auto_increment,
-name varchar(150) not null
+name varchar(150) not null,
+description varchar(1000) not null
 );
 
 create table question (
@@ -70,8 +70,9 @@ constraint fk_question_subject_id
 
 create table review (
 review_id int primary key auto_increment,
-review_description varchar(2000) not null,
-starts int not null,
+description varchar(2000) not null,
+stars int not null,
+review_date date not null,
 user_id int not null,
 constraint fk_review_user_id
            foreign key (user_id)
@@ -104,5 +105,3 @@ constraint fk_response_answer_option_id
            foreign key (answer_option_id)
            references answer_options(answer_option_id)
 );
-
-
