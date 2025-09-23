@@ -11,7 +11,7 @@ public class Review {
     private LocalDate reviewDate;
     private User student;
 
-    public Review(String description, LocalDate reviewDate, int reviewId, int stars, User student) {
+    public Review( int reviewId, String description,  int stars, LocalDate reviewDate, User student) {
         this.description = description;
         this.reviewDate = reviewDate;
         this.reviewId = reviewId;

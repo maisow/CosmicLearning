@@ -14,7 +14,7 @@ public class User {
     private int amount;
     private AppUser appUser;
 
-    public User(int age, int amount, AppUser appUser, String email, String firstName, String lastName, String title, String university, int userId) {
+    public User(int userId, String firstName, String lastName, int age,  String title, String university, String email, int amount, AppUser appUser) {
         this.age = age;
         this.amount = amount;
         this.appUser = appUser;

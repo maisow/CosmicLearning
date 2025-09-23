@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ReviewRepository {
 
-    List<Review> findReviewsByProfessor(int professorId);
+    List<Review> findReviewsByProfessor(int professorId, String username);
 
     Review addReview(Review review);
 

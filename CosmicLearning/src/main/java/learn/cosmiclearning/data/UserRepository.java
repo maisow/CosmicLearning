@@ -6,6 +6,8 @@ public interface UserRepository {
 
     User createProfile(User user);
 
-    User findProfileById(String id);
+    User findProfileById(String userId, String username);
+
+    boolean updateProfile(User user);
 
 }
