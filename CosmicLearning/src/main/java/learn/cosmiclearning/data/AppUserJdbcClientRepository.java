@@ -4,10 +4,12 @@ import learn.cosmiclearning.models.AppUser;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
 
+@Repository
 public class AppUserJdbcClientRepository implements AppUserRepository {
 
     private final JdbcClient jdbcClient;

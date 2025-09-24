@@ -1,0 +1,28 @@
+@url = http://localhost:8080
+
+### Authenticate
+
+POST {{url}}/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "john@smith.com",
+  "password": "P@ssw0rd!"
+}
+
+
+### Refresh Token
+
+POST {{url}}/refresh-token HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb3NtaWMtbGVhcm5pbmciLCJzdWIiOiJqb2huQHNtaXRoLmNvbSIsImFwcF91c2VyX2lkIjoxLCJhdXRob3JpdGllcyI6IlBST0ZFU1NPUiIsImV4cCI6MTc1ODc0NDU2MH0.9NmDBuNTXdz9ax-SKcdccKOakFcSKYl7bFtqrIsDpdo
+
+
+### Create Account
+POST {{url}}/create-account HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "cosmic@learning.com",
+  "password": "helloworld15!",
+  "roles": ["STUDENT"]
+}
