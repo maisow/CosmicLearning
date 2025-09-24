@@ -3,11 +3,13 @@ package learn.cosmiclearning.data;
 import learn.cosmiclearning.models.Review;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 import static com.sun.tools.attach.VirtualMachine.list;
 
+@Repository
 public class ReviewJdbcClientRepository implements ReviewRepository{
 
 
@@ -19,7 +21,6 @@ public class ReviewJdbcClientRepository implements ReviewRepository{
 
     @Override
     public List<Review> findReviewsByProfessor(int professorId, String username) {
-        // Optional: use this only if you want to reuse the logged-in user's roles
         List<String> roles = getRolesByUsername(username);
 
         final String sql = """
