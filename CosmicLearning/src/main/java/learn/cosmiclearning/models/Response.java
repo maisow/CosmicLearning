@@ -8,7 +8,7 @@ public class Response {
     private User user;
     private AnswerOptions answerOptions;
 
-    public Response(AnswerOptions answerOptions, Question question, User user) {
+    public Response(Question question, User user, AnswerOptions answerOptions) {
         this.answerOptions = answerOptions;
         this.question = question;
         this.user = user;

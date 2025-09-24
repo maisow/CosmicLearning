@@ -10,7 +10,7 @@ public class Level {
 
     private int amount_points;
 
-    public Level(int amount_points, int level, int levelId) {
+    public Level(int levelId, int level, int amount_points) {
         this.amount_points = amount_points;
         this.level = level;
         this.levelId = levelId;

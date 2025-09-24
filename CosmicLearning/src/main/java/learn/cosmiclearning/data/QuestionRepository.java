@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface QuestionRepository {
 
-    List<Question> findQuestionsBySubject(int subjectId);
+    List<Question> findQuestionsBySubject(int subjectId, String username);
 
-    List<Question> findQuestionsByProfessor(int professorId);
+    List<Question> findQuestionsByProfessor(int professorId, String username);
 
     Question addQuestion(Question question);
 

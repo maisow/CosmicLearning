@@ -9,7 +9,7 @@ public class AnswerOptions {
     private boolean isCorrect;
     private Question question;
 
-    public AnswerOptions(int answerOptionId, boolean isCorrect, String optionAnswer, Question question) {
+    public AnswerOptions(int answerOptionId, String optionAnswer, boolean isCorrect, Question question) {
         this.answerOptionId = answerOptionId;
         this.isCorrect = isCorrect;
         this.optionAnswer = optionAnswer;

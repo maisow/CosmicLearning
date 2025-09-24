@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public class UserJdbcClientRepository implements UserRepository {
 
-
     private final JdbcClient jdbcClient;
 
     public UserJdbcClientRepository(JdbcClient jdbcClient) {

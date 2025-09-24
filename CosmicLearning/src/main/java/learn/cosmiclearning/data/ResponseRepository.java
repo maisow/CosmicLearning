@@ -1,6 +1,8 @@
 package learn.cosmiclearning.data;
 
+import learn.cosmiclearning.models.Response;
+
 public interface ResponseRepository {
 
-    boolean answer(int userId, int questionId, int answerOptionId);
+    Response findAnswer(int userId, int questionId, int answerOptionId, String username);
 }

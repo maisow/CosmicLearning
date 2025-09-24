@@ -8,4 +8,8 @@ public interface LevelRepository {
 
     boolean updateLevel(Level level);
 
+    boolean deleteLevel(int levelId);
+
+    Level getLevelByPoints(int amountPoints);
+
 }

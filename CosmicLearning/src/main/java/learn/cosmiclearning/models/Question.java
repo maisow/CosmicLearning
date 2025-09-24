@@ -10,7 +10,7 @@ public class Question {
     private User professor;
     private Subject subject;
 
-    public Question(String hint, User professor, String question, int questionId, Subject subject) {
+    public Question(int questionId, String question, String hint, Subject subject, User professor) {
         this.hint = hint;
         this.professor = professor;
         this.question = question;
