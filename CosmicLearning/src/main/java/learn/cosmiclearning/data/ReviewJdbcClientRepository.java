@@ -39,7 +39,7 @@ public class ReviewJdbcClientRepository implements ReviewRepository{
 
         return jdbcClient.sql(sql)
                 .param(professorId)
-                .query(new ReviewMapper(roles)) // Or use List.of("ROLE_STUDENT")
+                .query(new ReviewMapper(roles)) 
                 .list();
     }
 
