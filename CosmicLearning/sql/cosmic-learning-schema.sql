@@ -10,7 +10,7 @@ amount_points int not null
 
 create table app_user (
 app_user_id int primary key auto_increment,
-username varchar(50) not null,
+username varchar(50) not null unique,
 password_hash varchar(2048) not null,
 enabled bit not null default(1)
 );
@@ -105,3 +105,25 @@ constraint fk_response_answer_option_id
            foreign key (answer_option_id)
            references answer_options(answer_option_id)
 );
+
+insert into app_role (name) values
+('STUDENT'),
+('PROFESSOR');
+
+insert into app_user (username, password_hash, enabled)
+    values
+    ('john@smith.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
+    ('sally@jones.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1);
+
+insert into app_user_role
+    values
+    (1, 2),
+    (2, 1);
+
+insert into subject (name, description) values
+('Classical Mechanics', 'Study of the motion of bodies under the influence of forces, including Newton\'s laws.'),
+('Electricity and Magnetism', 'Explores electric and magnetic fields, circuits, and electromagnetic forces.'),
+('Optics', 'Focuses on the behavior of light and its interactions with matter, including lenses and mirrors.'),
+('Thermodynamics', 'Deals with heat, energy, and the laws governing their transformations.'),
+('Linear Algebra', 'Study of vectors, vector spaces, and linear transformations.'),
+('Calculus', 'Mathematical study of continuous change, including derivatives and integrals.');

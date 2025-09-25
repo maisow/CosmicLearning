@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class SubjectJdbcClientRepository implements SubjectRepository {
 
@@ -41,7 +43,7 @@ public class SubjectJdbcClientRepository implements SubjectRepository {
 
         final String sql = "update subject set "
                 + "name = :name, "
-                + "description = :description, "
+                + "description = :description "
                 + "where subject_id = :subject_id;";
 
         return jdbcClient.sql(sql)
@@ -55,5 +57,34 @@ public class SubjectJdbcClientRepository implements SubjectRepository {
     public boolean deleteSubject(int subjectId) {
         jdbcClient.sql("delete from question where subject_id = ?;").param(subjectId).update();
         return jdbcClient.sql("delete from subject where subject_id = ?;").param(subjectId).update() > 0;
+    }
+
+    @Override
+    public List<Subject> findAllSubjects() {
+        String sql = """
+                select
+                subject_id,
+                name,
+                description
+                from subject
+                """;
+
+        return jdbcClient
+                .sql(sql)
+                .query(new SubjectMapper())
+                .list();
+    }
+
+    @Override
+    public Subject findSubjectById(int subjectId) {
+
+        final String sql = "select subject_id, name, description from subject "
+                + "where subject_id = ?;";
+
+        return jdbcClient.sql(sql)
+                .param(subjectId)
+                .query(new SubjectMapper())
+                .optional()
+                .orElse(null);
     }
 }

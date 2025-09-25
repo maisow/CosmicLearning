@@ -12,4 +12,8 @@ public interface SubjectRepository {
 
     boolean deleteSubject(int subjectId);
 
+    List<Subject> findAllSubjects();
+
+    Subject findSubjectById(int subjectId);
+
 }

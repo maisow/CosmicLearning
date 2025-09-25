@@ -6,6 +6,7 @@ import learn.cosmiclearning.data.AppUserRepository;
 import learn.cosmiclearning.domain.Result;
 import learn.cosmiclearning.domain.ResultType;
 import learn.cosmiclearning.models.AppUser;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -70,12 +71,15 @@ public class AppUserService implements UserDetailsService {
             return result;
         }
 
-        appUser = repository.create(appUser);
-        result.setPayload(appUser);
+        try {
+            appUser = repository.create(appUser);
+            result.setPayload(appUser);
+        } catch (DuplicateKeyException ex) {
+            result.addErrorMessage(ResultType.INVALID, "The provided username already exists");
+        }
 
         return result;
     }
-
 
     private Result<AppUser> validate(AppUser appUser) {
         Result<AppUser> result = new Result<>();

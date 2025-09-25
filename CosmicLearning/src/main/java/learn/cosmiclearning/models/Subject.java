@@ -1,11 +1,18 @@
 package learn.cosmiclearning.models;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Objects;
 
 public class Subject {
 
     private int subjectId;
+    @NotNull
+    @NotBlank(message = "Name cannot be blank")
     private String name;
+    @NotNull
+    @NotBlank(message = "Description cannot be blank")
     private String description;
 
     public Subject(int subjectId, String name, String description) {
