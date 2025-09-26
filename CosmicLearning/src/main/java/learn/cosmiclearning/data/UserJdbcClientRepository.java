@@ -116,7 +116,56 @@ public class UserJdbcClientRepository implements UserRepository {
                 .list();
     }
 
-    private List<String> getRolesByUsername(String username) {
+    @Override
+    public User findByUsername(String username) {
+        List<String> roles = getRolesByUsername(username);
+
+        final String sql = """
+        select
+            u.user_id,
+            u.first_name,
+            u.last_name,
+            u.age,
+            u.title,
+            u.university,
+            u.amount,
+            u.app_user_id
+        from user u
+        join app_user au ON u.app_user_id = au.app_user_id
+        where au.username = ?
+        """;
+
+        return jdbcClient.sql(sql)
+                .param(username)
+                .query(new UserMapper(roles))
+                .optional()
+                .orElse(null);
+    }
+
+    @Override
+    public User findById(int userId) {
+        final String sql = """
+        select
+            u.user_id,
+            u.first_name,
+            u.last_name,
+            u.age,
+            u.title,
+            u.university,
+            u.amount,
+            u.app_user_id
+        from user u
+        where u.user_id = ?;
+        """;
+
+        return jdbcClient.sql(sql)
+                .param(userId)
+                .query(new UserMapper(List.of()))
+                .optional()
+                .orElse(null);
+    }
+
+    public List<String> getRolesByUsername(String username) {
         final String sql = "select r.name "
                 + "from app_user_role ur "
                 + "join app_role r on ur.app_role_id = r.app_role_id "

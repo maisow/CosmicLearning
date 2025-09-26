@@ -8,10 +8,8 @@ import java.util.Objects;
 public class Subject {
 
     private int subjectId;
-    @NotNull
     @NotBlank(message = "Name cannot be blank")
     private String name;
-    @NotNull
     @NotBlank(message = "Description cannot be blank")
     private String description;
 

@@ -38,6 +38,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/cosmic-learning/user", "/cosmic-learning/user/*").permitAll()
                 .requestMatchers(HttpMethod.POST, "/cosmic-learning/user").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/cosmic-learning/user/*").authenticated()
+                .requestMatchers(HttpMethod.GET, "/cosmic-learning/review", "/cosmic-learning/review/*").permitAll()
+                .requestMatchers(HttpMethod.POST, "/cosmic-learning/review").hasAuthority("STUDENT")
                 .requestMatchers("/**").denyAll());
 
         http.addFilter(new JwtRequestFilter(authenticationManager(config), converter));

@@ -13,4 +13,6 @@ public interface ReviewRepository {
     boolean updateReview(Review review);
 
     boolean deleteReview(int reviewId);
+
+    Review findById(int reviewId);
 }

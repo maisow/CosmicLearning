@@ -5,9 +5,8 @@ import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
-
-import static com.sun.tools.attach.VirtualMachine.list;
 
 @Repository
 public class ReviewJdbcClientRepository implements ReviewRepository{
@@ -25,15 +24,29 @@ public class ReviewJdbcClientRepository implements ReviewRepository{
 
         final String sql = """
             select
-            r.review_id, r.description, r.stars, r.review_date,
-            u.user_id, u.first_name, u.last_name, u.age, u.title, u.university, u.amount,
-            u.app_user_id
+            r.review_id,
+            r.description,
+            r.stars,
+            s.user_id as student_user_id,
+            s.first_name as student_first_name,
+            s.last_name as student_last_name,
+            s.age as student_age,
+            s.title as student_title,
+            s.university as student_university,
+            s.amount as student_amount,
+            s.app_user_id as student_app_user_id,
+            p.user_id as professor_user_id,
+            p.first_name as professor_first_name,
+            p.last_name as professor_last_name,
+            p.age as professor_age,
+            p.title as professor_title,
+            p.university as professor_university,
+            p.amount as professor_amount,
+            p.app_user_id as professor_app_user_id
             from review r
-            join user u on r.user_id = u.user_id
-            join app_user_role aur on u.app_user_id = aur.app_user_id
-            join app_role ar on aur.app_role_id = ar.app_role_id
-            where ar.name = 'student'
-          and r.professor_user_id = ?
+            join user s on r.student_id = s.user_id
+            join user p on r.professor_id = p.user_id
+            where p.user_id = ?
         """;
 
         return jdbcClient.sql(sql)
@@ -44,16 +57,21 @@ public class ReviewJdbcClientRepository implements ReviewRepository{
 
     @Override
     public Review addReview(Review review) {
-        final String sql = "insert into review (description, stars, review_date, user_id) "
-                + "values (:description, :stars, :review_date, :user_id);";
+
+        if (review.getReviewDate() == null) {
+            review.setReviewDate(LocalDate.now());
+        }
+
+        final String sql = "insert into review (description, stars, student_id, professor_id) "
+                + "values (:description, :stars, :user_id, :professor_id);";
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         int rowsAffected = jdbcClient.sql(sql)
                 .param("description", review.getDescription())
                 .param("stars", review.getStars())
-                .param("review_date", review.getReviewDate())
                 .param("user_id", review.getStudent().getUserId())
+                .param("professor_id", review.getProfessor().getUserId())
                 .update(keyHolder, "review_id");
 
         if (rowsAffected <= 0) {
@@ -71,15 +89,15 @@ public class ReviewJdbcClientRepository implements ReviewRepository{
         final String sql = "update review set "
                 + "description = :description, "
                 + "stars = :stars, "
-                + "review_date = :review_date, "
-                + "user_id = :user_id "
+                + "student_id = :student_id "
+                + "professor_id = :professor_id"
                 + "where review_id = :review_id;";
 
         return jdbcClient.sql(sql)
                 .param("description", review.getDescription())
                 .param("stars", review.getStars())
-                .param("review_date", review.getReviewDate())
                 .param("user_id", review.getStudent().getUserId())
+                .param("professor_id", review.getProfessor().getUserId())
                 .param("review_id", review.getReviewId())
                 .update() > 0;
     }
@@ -89,6 +107,46 @@ public class ReviewJdbcClientRepository implements ReviewRepository{
         final String sql = "delete from review where review_id = ?";
         return jdbcClient.sql(sql).param(reviewId).update() > 0;
     }
+
+    @Override
+    public Review findById(int reviewId) {
+        final String sql = """
+        select
+            r.review_id,
+            r.description,
+            r.stars,
+            r.review_date,
+            s.user_id as student_user_id,
+            s.first_name as student_first_name,
+            s.last_name as student_last_name,
+            s.age as student_age,
+            s.title as student_title,
+            s.university as student_university,
+            s.amount as student_amount,
+            s.app_user_id as student_app_user_id,
+            p.user_id as professor_user_id,
+            p.first_name as professor_first_name,
+            p.last_name as professor_last_name,
+            p.age as professor_age,
+            p.title as professor_title,
+            p.university as professor_university,
+            p.amount as professor_amount,
+            p.app_user_id as professor_app_user_id
+        from review r
+        join user s on r.student_id = s.user_id
+        join user p on r.professor_id = p.user_id
+        where r.review_id = ?
+    """;
+
+        List<String> roles = List.of("STUDENT", "PROFESSOR");
+
+        return jdbcClient.sql(sql)
+                .param(reviewId)
+                .query(new ReviewMapper(roles))
+                .optional()
+                .orElse(null);
+    }
+
 
     private List<String> getRolesByUsername(String username) {
         final String sql = "select r.name "
