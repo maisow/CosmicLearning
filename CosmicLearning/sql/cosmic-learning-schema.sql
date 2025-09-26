@@ -127,3 +127,7 @@ insert into subject (name, description) values
 ('Thermodynamics', 'Deals with heat, energy, and the laws governing their transformations.'),
 ('Linear Algebra', 'Study of vectors, vector spaces, and linear transformations.'),
 ('Calculus', 'Mathematical study of continuous change, including derivatives and integrals.');
+
+insert into user (first_name, last_name, age, title, university, email, amount, app_user_id) values
+('John', 'Smith', 25, 'Dr.', 'MIT', 'john.smith@mit.edu', 0, 1),
+('Sally', 'Jones', 30, 'Ms.', 'Stanford', 'sally.jones@stanford.edu', 0, 2);

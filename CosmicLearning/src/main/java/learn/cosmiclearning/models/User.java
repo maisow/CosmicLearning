@@ -1,24 +1,30 @@
 package learn.cosmiclearning.models;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Objects;
 
 public class User {
 
     private int userId;
+    @NotBlank(message = "First name cannot be blank")
     private String firstName;
+    @NotBlank(message = "Last name cannot be blank")
     private String lastName;
+    @Min(value = 18, message = "User must be at least 18 years old")
     private int age;
     private String title;
+    @NotBlank(message = "University cannot be blank")
     private String university;
-    private String email;
     private int amount;
-    private AppUser appUser;
+    private int appUserId;
 
-    public User(int userId, String firstName, String lastName, int age,  String title, String university, String email, int amount, AppUser appUser) {
+    public User(int userId, String firstName, String lastName, int age,  String title, String university,  int amount, int appUserId) {
         this.age = age;
         this.amount = amount;
-        this.appUser = appUser;
-        this.email = email;
+        this.appUserId = appUserId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.title = title;
@@ -42,20 +48,12 @@ public class User {
         this.amount = amount;
     }
 
-    public AppUser getAppUser() {
-        return appUser;
+    public int getAppUserId() {
+        return appUserId;
     }
 
-    public void setAppUser(AppUser appUser) {
-        this.appUser = appUser;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAppUser(int appUserId) {
+        this.appUserId = appUserId;
     }
 
     public String getFirstName() {
@@ -101,12 +99,12 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof User user)) return false;
-        return getUserId() == user.getUserId() && getAge() == user.getAge() && getAmount() == user.getAmount() && Objects.equals(getFirstName(), user.getFirstName()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getTitle(), user.getTitle()) && Objects.equals(getUniversity(), user.getUniversity()) && Objects.equals(getEmail(), user.getEmail()) && Objects.equals(getAppUser(), user.getAppUser());
+        return getUserId() == user.getUserId() && getAge() == user.getAge() && getAmount() == user.getAmount() && getAppUserId() == user.getAppUserId() && Objects.equals(getFirstName(), user.getFirstName()) && Objects.equals(getLastName(), user.getLastName()) && Objects.equals(getTitle(), user.getTitle()) && Objects.equals(getUniversity(), user.getUniversity());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getFirstName(), getLastName(), getAge(), getTitle(), getUniversity(), getEmail(), getAmount(), getAppUser());
+        return Objects.hash(getUserId(), getFirstName(), getLastName(), getAge(), getTitle(), getUniversity(), getAmount(), getAppUserId());
     }
 
     @Override
@@ -118,9 +116,8 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", title='" + title + '\'' +
                 ", university='" + university + '\'' +
-                ", email='" + email + '\'' +
                 ", amount=" + amount +
-                ", appUser=" + appUser +
+                ", appUserId=" + appUserId +
                 '}';
     }
 }

@@ -1,0 +1,91 @@
+@url = http://localhost:8080/cosmic-learning/user
+
+@jwt = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb3NtaWMtbGVhcm5pbmciLCJzdWIiOiJuZXdAbGVhcm5pbmcuY29tIiwiYXBwX3VzZXJfaWQiOjQsImF1dGhvcml0aWVzIjoiUFJPRkVTU09SIiwiZXhwIjoxNzU4OTAwODY2fQ.sdcQGh13mkCj26NOkz6m_mRMqcCshuAJdzXeRuTuR6g
+
+### Create Account
+POST http://localhost:8080/create-account HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "new@learning.com",
+  "password": "helloworld15!",
+  "roles": ["PROFESSOR"]
+}
+
+### Authenticate
+
+POST  http://localhost:8080/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "new@learning.com",
+  "password": "helloworld15!"
+}
+
+### Get user by id
+GET {{url}}/2 HTTP/1.1
+
+
+### Create user
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "userId": 1,
+  "firstName": "Maimouna",
+  "lastName": "Sow",
+  "age": 24,
+  "title": "",
+  "university" : "my university",
+  "amount": 0,
+  "appUserId" : 4
+}
+
+### Create user bad
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "userId": 1,
+  "firstName": "",
+  "lastName": "",
+  "age": 10,
+  "title": "",
+  "university" : "",
+  "amount": 0,
+  "appUserId" : 4
+}
+
+### Update user
+PUT {{url}}/3 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "userId": 3,
+  "firstName": "M",
+  "lastName": "S",
+  "age": 24,
+  "title": "",
+  "university" : "my university",
+  "amount": 0,
+  "appUserId" : 4
+}
+
+### Update user bad
+PUT {{url}}/1 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "userId": 1,
+  "firstName": "",
+  "lastName": "",
+  "age": 10,
+  "title": "",
+  "university" : "",
+  "amount": 0,
+  "appUserId" : 4
+}

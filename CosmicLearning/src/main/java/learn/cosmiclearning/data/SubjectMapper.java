@@ -15,6 +15,5 @@ public class SubjectMapper implements RowMapper<Subject> {
                 rs.getString("name"),
                 rs.getString("description")
         );
-
     }
 }

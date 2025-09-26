@@ -28,12 +28,8 @@ public class ResponseJdbcClientRepository implements ResponseRepository {
             u.age,
             u.title,
             u.university,
-            u.email,
             u.amount,
-            ap.app_user_id,
-            ap.username,
-            ap.password_hash,
-            ap.enabled,
+            u.app_user_id,
             s.subject_id,
             s.name,
             s.description,
@@ -45,7 +41,6 @@ public class ResponseJdbcClientRepository implements ResponseRepository {
             ao.correct
         from response r
         join user u on r.user_id = u.user_id
-        join app_user ap on u.app_user_id = ap.app_user_id
         join question q on r.question_id = q.question_id
         join subject s on q.subject_id = s.subject_id
         join answer_options ao on r.answer_option_id = ao.answer_option_id

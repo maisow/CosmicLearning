@@ -3,9 +3,11 @@ package learn.cosmiclearning.data;
 import learn.cosmiclearning.models.Question;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class QuestionJdbcClientRepository implements QuestionRepository {
 
     private final JdbcClient jdbcClient;
@@ -26,12 +28,8 @@ public class QuestionJdbcClientRepository implements QuestionRepository {
             u.age,
             u.title,
             u.university,
-            u.email,
             u.amount,
-            ap.app_user_id,
-            ap.username,
-            ap.password_hash,
-            ap.enabled,
+            u.app_user_id,
             s.subject_id,
             s.name,
             s.description,
@@ -39,9 +37,8 @@ public class QuestionJdbcClientRepository implements QuestionRepository {
             q.question,
             q.hint
         from question q
-         join subject s on q.subject_id = s.subject_id
+        join subject s on q.subject_id = s.subject_id
         join user u on q.user_id = u.user_id
-        join app_user ap on u.app_user_id = ap.app_user_id
         where s.subject_id = ?;
         """;
 
@@ -63,12 +60,8 @@ public class QuestionJdbcClientRepository implements QuestionRepository {
             u.age,
             u.title,
             u.university,
-            u.email,
             u.amount,
-            ap.app_user_id,
-            ap.username,
-            ap.password_hash,
-            ap.enabled,
+            u.app_user_id,
             s.subject_id,
             s.name,
             s.description,
@@ -76,9 +69,8 @@ public class QuestionJdbcClientRepository implements QuestionRepository {
             q.question,
             q.hint
         from question q
-         join subject s on q.subject_id = s.subject_id
+        join subject s on q.subject_id = s.subject_id
         join user u on q.user_id = u.user_id
-        join app_user ap on u.app_user_id = ap.app_user_id
         where u.user_id = ?;
         """;
 

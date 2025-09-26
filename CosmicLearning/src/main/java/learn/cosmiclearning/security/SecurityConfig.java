@@ -31,10 +31,13 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/authenticate").permitAll()
                 .requestMatchers(HttpMethod.POST, "/refresh-token").authenticated()
                 .requestMatchers(HttpMethod.POST, "/create-account").permitAll()
-                .requestMatchers(HttpMethod.GET, "/cosmic-learning", "/cosmic-learning/*").permitAll()
-                .requestMatchers(HttpMethod.POST, "/cosmic-learning").hasAuthority("PROFESSOR")
-                .requestMatchers(HttpMethod.PUT, "/cosmic-learning/*").hasAuthority("PROFESSOR")
-                .requestMatchers(HttpMethod.DELETE, "/cosmic-learning/*").hasAuthority("PROFESSOR")
+                .requestMatchers(HttpMethod.GET, "/cosmic-learning/subject", "/cosmic-learning/subject/*").permitAll()
+                .requestMatchers(HttpMethod.POST, "/cosmic-learning/subject").hasAuthority("PROFESSOR")
+                .requestMatchers(HttpMethod.PUT, "/cosmic-learning/subject/*").hasAuthority("PROFESSOR")
+                .requestMatchers(HttpMethod.DELETE, "/cosmic-learning/subject/*").hasAuthority("PROFESSOR")
+                .requestMatchers(HttpMethod.GET, "/cosmic-learning/user", "/cosmic-learning/user/*").permitAll()
+                .requestMatchers(HttpMethod.POST, "/cosmic-learning/user").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/cosmic-learning/user/*").authenticated()
                 .requestMatchers("/**").denyAll());
 
         http.addFilter(new JwtRequestFilter(authenticationManager(config), converter));

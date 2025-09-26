@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cosmic-learning")
+@RequestMapping("/cosmic-learning/subject")
 public class SubjectController {
 
     private final SubjectService service;

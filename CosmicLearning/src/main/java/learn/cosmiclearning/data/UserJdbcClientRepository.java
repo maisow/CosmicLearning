@@ -19,8 +19,8 @@ public class UserJdbcClientRepository implements UserRepository {
     @Override
     public User createProfile(User user) {
         final String sql = "insert into user (first_name, last_name, age, title, university," +
-                " email, amount, app_user_id) "
-                + "values (:first_name, :last_name, :age, :title, :university, :email, :amount, :app_user_id);";
+                "  amount, app_user_id) "
+                + "values (:first_name, :last_name, :age, :title, :university, :amount, :app_user_id);";
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -30,9 +30,8 @@ public class UserJdbcClientRepository implements UserRepository {
                 .param("age", user.getAge())
                 .param("title", user.getTitle())
                 .param("university", user.getUniversity())
-                .param("email", user.getEmail())
                 .param("amount", user.getAmount())
-                .param("app_user_id", user.getAppUser().getId())
+                .param("app_user_id", user.getAppUserId())
                 .update(keyHolder, "user_id");
 
         if (rowsAffected <= 0) {
@@ -45,7 +44,7 @@ public class UserJdbcClientRepository implements UserRepository {
     }
 
     @Override
-    public User findProfileById(String userId, String username) {
+    public User findProfileById(int userId, String username) {
         List<String> roles = getRolesByUsername(username);
 
         String sql = """
@@ -56,14 +55,9 @@ public class UserJdbcClientRepository implements UserRepository {
             u.age,
             u.title,
             u.university,
-            u.email,
             u.amount,
-            ap.app_user_id,
-            ap.username,
-            ap.password_hash,
-            ap.enabled
+            u.app_user_id
         from user u
-        join app_user ap on u.app_user_id = ap.app_user_id
         where u.user_id = ?;
         """;
 
@@ -83,7 +77,6 @@ public class UserJdbcClientRepository implements UserRepository {
                 + "age = :age, "
                 + "title = :title, "
                 + "university = :university, "
-                + "email = :email, "
                 + "amount = :amount, "
                 + "app_user_id = :app_user_id "
                 + "where user_id = :user_id;";
@@ -95,11 +88,32 @@ public class UserJdbcClientRepository implements UserRepository {
                 .param("age", user.getAge())
                 .param("title", user.getTitle())
                 .param("university", user.getUniversity())
-                .param("email", user.getEmail())
                 .param("amount", user.getAmount())
-                .param("app_user_id", user.getAppUser().getId())
+                .param("app_user_id", user.getAppUserId())
                 .param("user_id", user.getUserId())
                 .update() > 0;
+    }
+
+    @Override
+    public List<User> findAllProfiles(String username) {
+        List<String> roles = getRolesByUsername(username);
+        String sql = """
+        select
+            u.user_id,
+            u.first_name,
+            u.last_name,
+            u.age,
+            u.title,
+            u.university,
+            u.amount,
+            u.app_user_id,
+        from user u
+        """;
+
+        return jdbcClient
+                .sql(sql)
+                .query(new UserMapper(roles))
+                .list();
     }
 
     private List<String> getRolesByUsername(String username) {

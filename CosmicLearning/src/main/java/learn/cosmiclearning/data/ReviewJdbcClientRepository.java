@@ -26,12 +26,11 @@ public class ReviewJdbcClientRepository implements ReviewRepository{
         final String sql = """
             select
             r.review_id, r.description, r.stars, r.review_date,
-            u.user_id, u.first_name, u.last_name, u.age, u.title, u.university, u.email, u.amount,
-            ap.app_user_id, ap.username, ap.password_hash, ap.enabled
+            u.user_id, u.first_name, u.last_name, u.age, u.title, u.university, u.amount,
+            u.app_user_id
             from review r
             join user u on r.user_id = u.user_id
-            join app_user ap on u.app_user_id = ap.app_user_id
-            join app_user_role aur on ap.app_user_id = aur.app_user_id
+            join app_user_role aur on u.app_user_id = aur.app_user_id
             join app_role ar on aur.app_role_id = ar.app_role_id
             where ar.name = 'student'
           and r.professor_user_id = ?

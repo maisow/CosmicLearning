@@ -1,6 +1,6 @@
-@url = http://localhost:8080/cosmic-learning
+@url = http://localhost:8080/cosmic-learning/subject
 
-@jwt = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb3NtaWMtbGVhcm5pbmciLCJzdWIiOiJjb3NtaWNAbGVhcm5pbmcuY29tIiwiYXBwX3VzZXJfaWQiOjMsImF1dGhvcml0aWVzIjoiUFJPRkVTU09SIiwiZXhwIjoxNzU4ODI1NDM1fQ.IcIqG2X5CgJ_IAAPKi79coCJcGgbWw2S6Dm6c7NozyE
+@jwt = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb3NtaWMtbGVhcm5pbmciLCJzdWIiOiJjb3NtaWNAbGVhcm5pbmcuY29tIiwiYXBwX3VzZXJfaWQiOjMsImF1dGhvcml0aWVzIjoiUFJPRkVTU09SIiwiZXhwIjoxNzU4ODI4NjcwfQ.z8550AIrbIG-OCPPjVILxiwppiAmI37qO_4fgQTLpTU
 
 ### Create Account
 POST http://localhost:8080/create-account HTTP/1.1
@@ -27,7 +27,7 @@ Content-Type: application/json
 GET {{url}} HTTP/1.1
 
 ### Find subject by id
-GET {{url}}/2 HTTP/1.1
+GET {{url}}/4 HTTP/1.1
 
 ### Create subject
 POST {{url}} HTTP/1.1
@@ -75,8 +75,6 @@ Authorization: Bearer {{jwt}}
 
 
 ### Delete a subject
-DELETE {{url}}/5 HTTP/1.1
+DELETE {{url}}/3 HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{jwt}}
-
-

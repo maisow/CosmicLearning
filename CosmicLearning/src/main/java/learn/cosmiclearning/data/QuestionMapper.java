@@ -16,12 +16,6 @@ public class QuestionMapper implements RowMapper<Question> {
 
     @Override
     public Question mapRow(ResultSet rs, int rowNum) throws SQLException {
-        AppUser appUser =  new AppUser(
-                rs.getInt("app_user_id"),
-                rs.getString("username"),
-                rs.getString("password_hash"),
-                rs.getBoolean("enabled"),
-                roles);
 
         User user = new User(
                 rs.getInt("user_id"),
@@ -30,9 +24,8 @@ public class QuestionMapper implements RowMapper<Question> {
                 rs.getInt("age"),
                 rs.getString("title"),
                 rs.getString("university"),
-                rs.getString("email"),
                 rs.getInt("amount"),
-                appUser);
+                rs.getInt("app_user_id"));
 
         Subject subject = new Subject(
                 rs.getInt("subject_id"),

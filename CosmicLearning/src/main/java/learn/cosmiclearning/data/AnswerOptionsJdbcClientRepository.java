@@ -55,12 +55,8 @@ public class AnswerOptionsJdbcClientRepository implements  AnswerOptionsReposito
             u.age,
             u.title,
             u.university,
-            u.email,
             u.amount,
-            ap.app_user_id,
-            ap.username,
-            ap.password_hash,
-            ap.enabled,
+            u.app_user_id,
             s.subject_id,
             s.name,
             s.description,
@@ -74,7 +70,6 @@ public class AnswerOptionsJdbcClientRepository implements  AnswerOptionsReposito
         join question q on ao.question_id = q.question_id
         join subject s on q.subject_id = s.subject_id
         join user u on q.user_id = u.user_id
-        join app_user ap on u.app_user_id = ap.app_user_id
         where q.question_id = ?;
         """;
 
