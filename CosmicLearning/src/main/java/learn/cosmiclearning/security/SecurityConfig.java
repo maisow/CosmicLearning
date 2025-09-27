@@ -50,6 +50,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/cosmic-learning/answer-options").hasAuthority("PROFESSOR")
                 .requestMatchers(HttpMethod.PUT, "/cosmic-learning/answer-options/*").hasAuthority("PROFESSOR")
                 .requestMatchers(HttpMethod.DELETE, "/cosmic-learning/answer-options/*").hasAuthority("PROFESSOR")
+                .requestMatchers(HttpMethod.GET, "/cosmic-learning/response", "/cosmic-learning/response/*/*/*", "/cosmic-learning/response/is-correct/*").permitAll()
+                .requestMatchers(HttpMethod.POST, "/cosmic-learning/response").hasAuthority("STUDENT")
                 .requestMatchers("/**").denyAll());
 
         http.addFilter(new JwtRequestFilter(authenticationManager(config), converter));

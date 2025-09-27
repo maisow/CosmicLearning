@@ -42,12 +42,13 @@ public class ResponseMapper implements RowMapper<Response>  {
 
         AnswerOptions answerOptions = new  AnswerOptions(
                 rs.getInt("answer_option_id"),
-                rs.getString("option"),
+                rs.getString("option_answer"),
                 rs.getBoolean("correct"),
                 question
         );
 
         return new Response(
+                rs.getInt("response_id"),
                 question,
                 user,
                 answerOptions

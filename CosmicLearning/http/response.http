@@ -1,0 +1,64 @@
+@url = http://localhost:8080/cosmic-learning/response
+
+@jwt = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb3NtaWMtbGVhcm5pbmciLCJzdWIiOiJhbnN3ZXJAbGVhcm5pbmcuY29tIiwiYXBwX3VzZXJfaWQiOjMsImF1dGhvcml0aWVzIjoiU1RVREVOVCIsImV4cCI6MTc1OTAxMTUwOH0.sEC2RlDR5qMSRDLbxssD9w46ryxLvOa9ibyc6feHoWk
+### Create Account
+POST http://localhost:8080/create-account HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "answer@learning.com",
+  "password": "helloworld15!",
+  "roles": ["STUDENT"]
+}
+
+### Authenticate
+
+POST  http://localhost:8080/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "answer@learning.com",
+  "password": "helloworld15!"
+}
+
+### Create user
+POST http://localhost:8080/cosmic-learning/user HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "userId": 1,
+  "firstName": "Professor1",
+  "lastName": "last name",
+  "age": 24,
+  "title": "Dr",
+  "university" : "Harvard",
+  "amount": 0,
+  "appUserId" : 3
+}
+
+### Get answer
+GET {{url}}/2/1/1 HTTP/1.1
+
+### Save Response
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "question": {
+    "questionId": 1
+  },
+  "user": {
+    "userId": 3
+  },
+  "answerOptions": {
+    "answerOptionId": 2
+  }
+
+}
+
+### Correct
+GET {{url}}/is-correct/9 HTTP/1.1
+
+
