@@ -1,0 +1,105 @@
+@url = http://localhost:8080/cosmic-learning/review
+
+@jwt = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb3NtaWMtbGVhcm5pbmciLCJzdWIiOiJuZXd3QGxlYXJuaW5nLmNvbSIsImFwcF91c2VyX2lkIjozLCJhdXRob3JpdGllcyI6IlNUVURFTlQiLCJleHAiOjE3NTg5ODg4Nzh9.VyI04NArRlYCnZuRIwzrldr7iEi6OUf-oHbD5bIcZqk
+
+### Create Account
+POST http://localhost:8080/create-account HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "neww@learning.com",
+  "password": "helloworld15!",
+  "roles": ["STUDENT"]
+}
+
+### Authenticate
+
+POST  http://localhost:8080/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "neww@learning.com",
+  "password": "helloworld15!"
+}
+
+### Create user
+POST http://localhost:8080/cosmic-learning/user HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "userId": 1,
+  "firstName": "New",
+  "lastName": "Sow",
+  "age": 24,
+  "title": "",
+  "university" : "my university",
+  "amount": 0,
+  "appUserId" : 3
+}
+
+### Get reviews by professor id
+GET {{url}}/1 HTTP/1.1
+
+### Create review
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "reviewId": 1,
+  "description": "Very good",
+  "stars": 4,
+  "student": {
+    "userId": 3
+  },
+  "professor" :
+  {
+    "userId": 1
+  }
+
+}
+
+
+### Create review bad
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "reviewId": 1,
+  "description": "",
+  "stars": 10,
+  "student": {
+    "userId": 3
+  },
+  "professor" :
+  {
+    "userId": 1
+  }
+
+}
+
+### update review
+PUT {{url}}/2 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "reviewId": 2,
+  "description": "",
+  "stars": -5,
+  "student": {
+    "userId": 3
+  },
+  "professor": {
+    "userId": 1
+  }
+}
+
+### Delete a review
+DELETE {{url}}/2 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+

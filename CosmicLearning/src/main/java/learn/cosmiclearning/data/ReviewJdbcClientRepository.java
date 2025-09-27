@@ -89,14 +89,14 @@ public class ReviewJdbcClientRepository implements ReviewRepository{
         final String sql = "update review set "
                 + "description = :description, "
                 + "stars = :stars, "
-                + "student_id = :student_id "
+                + "student_id = :student_id, "
                 + "professor_id = :professor_id"
-                + "where review_id = :review_id;";
+                + " where review_id = :review_id;";
 
         return jdbcClient.sql(sql)
                 .param("description", review.getDescription())
                 .param("stars", review.getStars())
-                .param("user_id", review.getStudent().getUserId())
+                .param("student_id", review.getStudent().getUserId())
                 .param("professor_id", review.getProfessor().getUserId())
                 .param("review_id", review.getReviewId())
                 .update() > 0;
@@ -115,7 +115,6 @@ public class ReviewJdbcClientRepository implements ReviewRepository{
             r.review_id,
             r.description,
             r.stars,
-            r.review_date,
             s.user_id as student_user_id,
             s.first_name as student_first_name,
             s.last_name as student_last_name,

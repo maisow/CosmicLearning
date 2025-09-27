@@ -50,7 +50,8 @@ public class ReviewController {
         if (reviewId != review.getReviewId()) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        Result<Review> result = service.update(review, );
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Result<Review> result = service.update(review, username);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else if (result.getResultType() == ResultType.NOT_FOUND) {
@@ -69,6 +70,4 @@ public class ReviewController {
         }
         return new ResponseEntity<>(result.getErrorMessages(), HttpStatus.BAD_REQUEST);
     }
-
-
 }

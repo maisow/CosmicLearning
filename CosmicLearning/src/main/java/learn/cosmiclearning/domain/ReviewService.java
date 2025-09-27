@@ -128,10 +128,7 @@ public class ReviewService {
 
         return result;
     }
-
-
-
-
+    
     private Result<Review> validate(Review review) {
         Result<Review> result = new Result<>();
 
