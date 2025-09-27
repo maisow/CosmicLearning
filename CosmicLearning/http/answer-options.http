@@ -1,0 +1,121 @@
+@url = http://localhost:8080/cosmic-learning/answer-options
+
+@jwt = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb3NtaWMtbGVhcm5pbmciLCJzdWIiOiJhbnN3ZXJAbGVhcm5pbmcuY29tIiwiYXBwX3VzZXJfaWQiOjMsImF1dGhvcml0aWVzIjoiUFJPRkVTU09SIiwiZXhwIjoxNzU5MDA1NDEyfQ.pXBtKSSA9x5m0_dSDoVp1AWHIQLvRCyTB3ndNDeDVxg
+### Create Account
+POST http://localhost:8080/create-account HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "answer@learning.com",
+  "password": "helloworld15!",
+  "roles": ["PROFESSOR"]
+}
+
+### Authenticate
+
+POST  http://localhost:8080/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "answer@learning.com",
+  "password": "helloworld15!"
+}
+
+### Create user
+POST http://localhost:8080/cosmic-learning/user HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "userId": 1,
+  "firstName": "Professor1",
+  "lastName": "last name",
+  "age": 24,
+  "title": "Dr",
+  "university" : "Harvard",
+  "amount": 0,
+  "appUserId" : 3
+}
+
+### Get answer options by question id
+GET {{url}}/1 HTTP/1.1
+
+### Create Question
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "questionId": 1,
+  "question": "What fell on newton's head",
+  "hint": "gravity",
+  "professor": {
+    "userId": 4
+  },
+  "subject" : {
+    "subjectId": 1
+  }
+}
+
+### Create Answer Options
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "answerOptionId": 1,
+  "optionAnswer": "My Option2",
+  "isCorrect": false,
+  "question": {
+    "questionId": 8
+  }
+}
+
+
+
+### update answer option
+PUT {{url}}/20 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "answerOptionId": 20,
+  "optionAnswer": "My",
+  "isCorrect": true,
+  "question": {
+    "questionId": 8
+  }
+}
+
+### Create question bad
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "answerOptionId": 1,
+  "optionAnswer": "",
+  "isCorrect": true,
+  "question": {
+    "questionId": 8
+  }
+}
+
+### update question bad
+PUT {{url}}/21 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "answerOptionId": 21,
+  "optionAnswer": "",
+  "isCorrect": true,
+  "question": {
+    "questionId": 8
+  }
+}
+
+### Delete a answer options
+DELETE {{url}}/20 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}

@@ -41,7 +41,7 @@ public class AnswerOptionsMapper  implements RowMapper<AnswerOptions> {
 
         return new  AnswerOptions(
                 rs.getInt("answer_option_id"),
-                rs.getString("option"),
+                rs.getString("option_answer"),
                 rs.getBoolean("correct"),
                 question
         );

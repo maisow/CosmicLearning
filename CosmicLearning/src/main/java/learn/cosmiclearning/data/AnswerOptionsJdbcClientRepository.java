@@ -3,9 +3,12 @@ package learn.cosmiclearning.data;
 import learn.cosmiclearning.models.AnswerOptions;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Repository
 public class AnswerOptionsJdbcClientRepository implements  AnswerOptionsRepository {
 
 
@@ -64,12 +67,12 @@ public class AnswerOptionsJdbcClientRepository implements  AnswerOptionsReposito
             q.question,
             q.hint,
             ao.answer_option_id,
-            ao.option,
-            ao.correct,
+            ao.option_answer,
+            ao.correct
         from answer_options ao
         join question q on ao.question_id = q.question_id
         join subject s on q.subject_id = s.subject_id
-        join user u on q.user_id = u.user_id
+        join `user` u on q.user_id = u.user_id
         where q.question_id = ?;
         """;
 
@@ -82,14 +85,14 @@ public class AnswerOptionsJdbcClientRepository implements  AnswerOptionsReposito
     @Override
     public boolean updateAnswerOptions(AnswerOptions answerOptions) {
         final String sql = "update answer_options set "
-                + "option = :option, "
+                + "option_answer = :option_answer, "
                 + "correct = :correct, "
-                + "question_id = :question_id, "
+                + "question_id = :question_id "
                 + "where answer_option_id = :answer_option_id;";
 
 
         return jdbcClient.sql(sql)
-                .param("option", answerOptions.getOptionAnswer())
+                .param("option_answer", answerOptions.getOptionAnswer())
                 .param("correct", answerOptions.isCorrect())
                 .param("question_id", answerOptions.getQuestion().getQuestionId())
                 .param("answer_option_id", answerOptions.getAnswerOptionId())

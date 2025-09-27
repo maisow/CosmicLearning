@@ -117,7 +117,6 @@ public class QuestionService {
                     "Question id %s not found",
                     id);
         }
-
         return result;
     }
 
