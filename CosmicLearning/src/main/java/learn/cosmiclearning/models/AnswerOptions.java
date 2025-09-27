@@ -1,10 +1,13 @@
 package learn.cosmiclearning.models;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Objects;
 
 public class AnswerOptions {
 
     private int answerOptionId;
+    @NotBlank(message = "Answer can't be blank")
     private String optionAnswer;
     private boolean isCorrect;
     private Question question;

@@ -134,7 +134,7 @@ public class ReviewJdbcClientRepository implements ReviewRepository{
         from review r
         join user s on r.student_id = s.user_id
         join user p on r.professor_id = p.user_id
-        where r.review_id = ?
+        where r.review_id = ?;
     """;
 
         List<String> roles = List.of("STUDENT", "PROFESSOR");

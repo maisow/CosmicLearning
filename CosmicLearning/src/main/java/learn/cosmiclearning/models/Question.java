@@ -1,11 +1,15 @@
 package learn.cosmiclearning.models;
 
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Objects;
 
 public class Question {
 
     private int questionId;
+    @NotBlank(message = "question cannot be blank")
     private String question;
+    @NotBlank(message = "Hint cannot be blank")
     private String hint;
     private User professor;
     private Subject subject;

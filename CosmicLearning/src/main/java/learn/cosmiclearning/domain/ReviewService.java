@@ -34,6 +34,7 @@ public class ReviewService {
         Result<Review> result = validate(review);
 
         if (!result.isSuccess()) {
+            result.addErrorMessage("Could not create review");
             return result;
         }
 
@@ -128,7 +129,7 @@ public class ReviewService {
 
         return result;
     }
-    
+
     private Result<Review> validate(Review review) {
         Result<Review> result = new Result<>();
 

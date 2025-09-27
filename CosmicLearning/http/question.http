@@ -1,0 +1,119 @@
+@url = http://localhost:8080/cosmic-learning/question
+
+@jwt = eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJjb3NtaWMtbGVhcm5pbmciLCJzdWIiOiJwcm9mQGxlYXJuaW5nLmNvbSIsImFwcF91c2VyX2lkIjo0LCJhdXRob3JpdGllcyI6IlBST0ZFU1NPUiIsImV4cCI6MTc1ODk5NDM5N30.iOAfqzhgdGmpll2UHFkBkSyRfCBpcnIRDRw7UR4uc8c
+
+### Create Account
+POST http://localhost:8080/create-account HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "prof@learning.com",
+  "password": "helloworld15!",
+  "roles": ["PROFESSOR"]
+}
+
+### Authenticate
+
+POST  http://localhost:8080/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "prof@learning.com",
+  "password": "helloworld15!"
+}
+
+### Create user
+POST http://localhost:8080/cosmic-learning/user HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "userId": 1,
+  "firstName": "Professor1",
+  "lastName": "last name",
+  "age": 24,
+  "title": "Dr",
+  "university" : "Harvard",
+  "amount": 0,
+  "appUserId" : 4
+}
+
+### Get questions by professor id
+GET {{url}}/by-professor/1 HTTP/1.1
+
+### Get questions by subject id
+GET {{url}}/by-subject/2 HTTP/1.1
+
+### Create Question
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "questionId": 1,
+  "question": "What fell on newton's head",
+  "hint": "gravity",
+  "professor": {
+    "userId": 4
+  },
+  "subject" : {
+    "subjectId": 1
+  }
+}
+
+### update question
+PUT {{url}}/10 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "questionId": 10,
+  "question": "updated",
+  "hint": "gravity",
+  "professor": {
+    "userId": 4
+  },
+  "subject" : {
+    "subjectId": 1
+  }
+}
+
+### Create question bad
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "questionId": 1,
+  "question": "",
+  "hint": "",
+  "professor": {
+    "userId": 4
+  },
+  "subject" : {
+    "subjectId": 1
+  }
+}
+
+### update question bad
+PUT {{url}}/10 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "questionId": 10,
+  "question": "",
+  "hint": "",
+  "professor": {
+    "userId": 4
+  },
+  "subject" : {
+    "subjectId": 1
+  }
+}
+### Delete a question
+DELETE {{url}}/7 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+

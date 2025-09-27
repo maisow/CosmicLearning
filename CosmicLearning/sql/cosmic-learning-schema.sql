@@ -40,7 +40,48 @@ last_name varchar(150) not null,
 age int not null,
 title varchar(5),
 university varchar(150) not null,
-email varchar(150) not null,
+drop database if exists cosmic_learning;
+create database cosmic_learning;
+use cosmic_learning;
+
+create table level (
+level_id int primary key auto_increment,
+level int not null,
+amount_points int not null
+);
+
+create table app_user (
+app_user_id int primary key auto_increment,
+username varchar(50) not null unique,
+password_hash varchar(2048) not null,
+enabled bit not null default(1)
+);
+
+create table app_role (
+app_role_id int primary key auto_increment,
+name varchar(50) not null unique
+);
+
+create table app_user_role (
+ app_user_id int not null,
+ app_role_id int not null,
+ constraint pk_app_user_role
+      primary key (app_user_id, app_role_id),
+ constraint fk_app_user_role_user_id
+      foreign key (app_user_id)
+      references app_user(app_user_id),
+ constraint fk_app_user_role_role_id
+      foreign key (app_role_id)
+      references app_role(app_role_id)
+);
+
+create table user (
+user_id int primary key auto_increment,
+first_name varchar(150) not null,
+last_name varchar(150) not null,
+age int not null,
+title varchar(5),
+university varchar(150) not null,
 amount int not null,
 app_user_id int not null,
 constraint fk_user_app_user_id
@@ -72,10 +113,13 @@ create table review (
 review_id int primary key auto_increment,
 description varchar(2000) not null,
 stars int not null,
-review_date date not null,
-user_id int not null,
-constraint fk_review_user_id
-           foreign key (user_id)
+student_id int not null,
+professor_id int not null,
+constraint fk_review_student_id
+           foreign key (student_id)
+           references user(user_id),
+constraint fk_review_professor_id
+           foreign key (professor_id)
            references user(user_id)
 );
 
@@ -121,13 +165,24 @@ insert into app_user_role
     (2, 1);
 
 insert into subject (name, description) values
-('Classical Mechanics', 'Study of the motion of bodies under the influence of forces, including Newton\'s laws.'),
+('Classical Mechanics', 'Study of the motion of bodies under the influence of forces, including Newton''s laws.'),
 ('Electricity and Magnetism', 'Explores electric and magnetic fields, circuits, and electromagnetic forces.'),
 ('Optics', 'Focuses on the behavior of light and its interactions with matter, including lenses and mirrors.'),
 ('Thermodynamics', 'Deals with heat, energy, and the laws governing their transformations.'),
 ('Linear Algebra', 'Study of vectors, vector spaces, and linear transformations.'),
 ('Calculus', 'Mathematical study of continuous change, including derivatives and integrals.');
 
-insert into user (first_name, last_name, age, title, university, email, amount, app_user_id) values
-('John', 'Smith', 25, 'Dr.', 'MIT', 'john.smith@mit.edu', 0, 1),
-('Sally', 'Jones', 30, 'Ms.', 'Stanford', 'sally.jones@stanford.edu', 0, 2);
+insert into user (first_name, last_name, age, title, university, amount, app_user_id) values
+('John', 'Smith', 25, 'Dr.', 'MIT', 0, 1),
+('Sally', 'Jones', 30, 'Ms.', 'Stanford', 0, 2);
+
+insert into review (description, stars, student_id, professor_id)
+values ('Dr. Smith explains difficult concepts very clearly.', 5, 2, 1);
+
+insert into question (question, hint, user_id, subject_id) values
+('What is Newton''s second law of motion?', 'Think about force, mass, and acceleration.', 1, 1),
+('What is the relationship between current and voltage in a resistor?', 'Use Ohm''s Law.', 1, 2),
+('What happens to light when it passes through a convex lens?', 'Consider image formation and focal points.', 1, 3),
+('What is the first law of thermodynamics?', 'It''s about energy conservation.', 1, 4),
+('What is the determinant of a 2x2 matrix?', 'Use the formula ad - bc.', 1, 5),
+('What is the derivative of sin(x)?', 'Recall basic trigonometric derivatives.', 1, 6);

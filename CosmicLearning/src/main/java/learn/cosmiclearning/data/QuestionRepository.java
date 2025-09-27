@@ -16,4 +16,5 @@ public interface QuestionRepository {
 
     boolean deleteQuestion(int questionId);
 
+    Question findById(int questionId, String username);
 }

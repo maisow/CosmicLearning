@@ -109,7 +109,7 @@ public class QuestionJdbcClientRepository implements QuestionRepository {
                 + "question = :question, "
                 + "hint = :hint, "
                 + "user_id = :user_id, "
-                + "subject_id = :subject_id, "
+                + "subject_id = :subject_id "
                 + "where question_id = :question_id;";
 
 
@@ -128,6 +128,40 @@ public class QuestionJdbcClientRepository implements QuestionRepository {
         jdbcClient.sql("delete from answer_options where question_id = ?;").param(questionId).update();
         return jdbcClient.sql("delete from question where question_id = ?;").param(questionId).update() > 0;
     }
+
+    @Override
+    public Question findById(int questionId, String username) {
+        List<String> roles = getRolesByUsername(username);
+
+        final String sql = """
+        select
+            u.user_id,
+            u.first_name,
+            u.last_name,
+            u.age,
+            u.title,
+            u.university,
+            u.amount,
+            u.app_user_id,
+            s.subject_id,
+            s.name,
+            s.description,
+            q.question_id,
+            q.question,
+            q.hint
+        from question q
+        join subject s on q.subject_id = s.subject_id
+        join user u on q.user_id = u.user_id
+        where q.question_id = ?;
+    """;
+
+        return jdbcClient.sql(sql)
+                .param(questionId)
+                .query(new QuestionMapper(roles))
+                .optional()
+                .orElse(null);
+    }
+
 
     private List<String> getRolesByUsername(String username) {
         final String sql = "select r.name "
