@@ -1,0 +1,11 @@
+@url = http://localhost:8080
+
+### Create Account
+POST {{url}}/create-account HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "test@learning.com",
+  "password": "Test1234!",
+  "roles": ["STUDENT"]
+}

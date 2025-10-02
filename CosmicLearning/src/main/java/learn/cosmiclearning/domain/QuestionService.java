@@ -8,6 +8,7 @@ import learn.cosmiclearning.data.ReviewRepository;
 import learn.cosmiclearning.data.UserRepository;
 import learn.cosmiclearning.models.Question;
 import learn.cosmiclearning.models.Review;
+import learn.cosmiclearning.models.Subject;
 import learn.cosmiclearning.models.User;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,10 @@ public class QuestionService {
 
     public List<Question> findQuestionsByProfessor(int professorId, String username) {
         return repository.findQuestionsBySubject(professorId, username);
+    }
+
+    public Question findQuestionById(int id, String username) {
+        return repository.findById(id, username);
     }
 
     public Result<Question> add(Question question, String username) {

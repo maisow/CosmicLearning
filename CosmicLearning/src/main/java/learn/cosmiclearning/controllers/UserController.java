@@ -25,8 +25,15 @@ public class UserController {
         this.service = service;
     }
 
+    @GetMapping
+    public List<User> findAll() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return service.findAll(username);
+    }
+
     @GetMapping("/{userId}")
-    public ResponseEntity<User> findSubjectById(@PathVariable int userId) {
+    public ResponseEntity<User> findUserById(@PathVariable int userId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         User user = service.findProfileById(userId, username);

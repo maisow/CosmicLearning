@@ -7,6 +7,7 @@ import learn.cosmiclearning.domain.ResultType;
 import learn.cosmiclearning.domain.ReviewService;
 import learn.cosmiclearning.models.Question;
 import learn.cosmiclearning.models.Review;
+import learn.cosmiclearning.models.Subject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +24,16 @@ public class QuestionController {
 
     public QuestionController(QuestionService service) {
         this.service = service;
+    }
+
+    @GetMapping("/{questionId}")
+    public ResponseEntity<Question> findQuestionById(@PathVariable int questionId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Question question = service.findQuestionById(questionId, username);
+        if (question == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(question, HttpStatus.OK);
     }
 
     @GetMapping("/by-subject/{subjectId}")

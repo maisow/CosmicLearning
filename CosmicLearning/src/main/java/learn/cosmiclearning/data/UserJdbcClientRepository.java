@@ -106,7 +106,7 @@ public class UserJdbcClientRepository implements UserRepository {
             u.title,
             u.university,
             u.amount,
-            u.app_user_id,
+            u.app_user_id
         from user u
         """;
 
